@@ -1,0 +1,108 @@
+function [image2, lista1] = loop2(dataSetName)
+
+
+imgSeqColor = loadImg(dataSetName,1);
+n2 = strcat(extractBetween(dataSetName, 10, strlength(dataSetName)-1),'_New0.png')
+n1 = strcat(extractBetween(dataSetName, 10, strlength(dataSetName)-1),'New1.png')
+mat1 = strcat(extractBetween(dataSetName, 10, strlength(dataSetName)-1),'_2.mat')
+tic
+% t = imread('LLE + change cave.png');
+% t = im2double(t);
+
+% t2 = t;
+%figure, imshow(t);
+% 
+% %iterating the algorithm in order to get better images
+% %saving the photos and saving the exit flag
+% lista0 = [];
+lista1 = [];
+imgSeqColor2 = uint8(load_images(dataSetName,1));
+filename = strcat(extractBetween(dataSetName, 1, strlength(dataSetName)-1), num2str(0,'_%03d'),'.png');
+%t = imread('./images/Garden_002.png');
+%t = project(imgSeqColor);
+[s1, s2, s3, s4] = size(imgSeqColor2);
+%image2 = mertensQuad(imgSeqColor, t, 0);
+
+list_images = [];
+
+for k=2:100
+   
+    Q1 = zeros(2,1);
+    
+    imgSeq = zeros(s1, s2, s4);
+    for i = 1:s4
+        imgSeq(:, :, i) =  rgb2gray( squeeze( imgSeqColor2(:,:,:,i) ) ); % color to gray conversion
+    end
+    
+    %Q1
+    %imshow(t);
+    list_images(:,:,:,k) = t;
+    filename = strcat(extractBetween(dataSetName, 1, strlength(dataSetName)-1), num2str(k,'_%03d'),'.png');
+    %it1 = projectIt(imgSeqColor, t);
+    t = imread(filename);
+    t = im2double(t);
+   
+    fI2 = 255*t;
+    fI2 = double(rgb2gray(fI2));
+    [Q1(2), Qs1, QMap1] = mef_ms_ssim(imgSeq, fI2);
+    
+    
+%     fI2 = t2;
+%     fI2 = double(rgb2gray(fI2));
+%     [Q0, Qs2, QMap2] = mef_ms_ssim(imgSeq, fI2);
+
+    %filename = strcat(extractBetween(dataSetName, 1, strlength(dataSetName)-1), num2str(k,'%03d'),'.png');
+    %filenameFlag = sprintf('MmyExitFlagN-1_%02d.txt', i);
+    %imwrite(t,filename{1})
+    %edit filenameFlag
+%     lista0(k) = Q0;
+    lista1(k) = Q1(2);
+    %imwrite(image,n1{1});
+    
+end
+%imshow(t);
+% m0 = max(lista0);
+m1 = max(lista1);
+% maxIndex0 = -1;
+maxIndex1 = -1;
+for i=1:100
+%     if lista0(i) == m0
+%         maxIndex0 = i;
+%     end
+    if lista1(i) == m1
+        maxIndex1 = i;
+    end
+end
+
+% 
+% t = project(imgSeqColor);
+% t2 = project(imgSeqColor);
+% for k = 1:maxIndex
+%     it1 = projectIt(imgSeqColor, t,1);
+%     t = it1;
+%     
+%     it2 = projectIt(imgSeqColor, t2,0);
+%     t2 = it2;
+% end
+% 
+a = strcat(extractBetween(filename, 1, strlength(filename)-8), num2str(maxIndex1,'_%03d'),'.png');
+ 
+%  t = imread(a{1});
+% % 
+% % % filename = strcat(extractBetween(dataSetName, 1, strlength(dataSetName)-4), num2str(maxIndex0,'%02d'),'.png');
+%  t2 = imread(a{1});
+%  t2 = im2double(t2);
+%  t = im2double(t);
+%  image = mertensQuad(imgSeqColor, t,1);
+%  image2 = mertensQuad(imgSeqColor, t2, 0);
+ 
+%     
+% 
+pomosna = imread(a{1});
+
+imwrite(pomosna,n2{1});
+
+ save(mat1{1})
+ toc
+
+end
