@@ -3,6 +3,8 @@ Research internship in Izmir University of Economics by mentorship of Devrim Una
 
 
 # Quantitative iterative results
+The results are measured on the data sets named after the names of the images in metric_results folder by using the objective IQA model https://ece.uwaterloo.ca/~k29ma/papers/15_TIP_MEF.pdf
+
 ![Balloons](metric_result/Balloons_plt.png)
 ![Candle](metric_result/Candle_plt.png)
 ![Garden2](metric_result/Garden_2plt.png)
